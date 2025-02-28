@@ -10,7 +10,5 @@ numpy
 matplotlib
 pandas
 scipy
-time
-os
 fastapi
 uvicorn
