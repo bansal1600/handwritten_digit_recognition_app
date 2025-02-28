@@ -11,3 +11,5 @@ numpy
 matplotlib
 pandas
 scipy
+time
+os

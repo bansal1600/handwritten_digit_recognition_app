@@ -5,6 +5,35 @@ import base64
 from io import BytesIO
 from PIL import Image
 from streamlit_drawable_canvas import st_canvas
+import subprocess
+import time
+
+# Function to start FastAPI server
+def run_fastapi():
+    process = subprocess.Popen(
+        ["uvicorn", "streamlit_api:app", "--host", "0.0.0.0", "--port", "8000"],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+    )
+    return process
+
+# Start FastAPI server in a separate thread
+fastapi_process = run_fastapi()
+
+# Function to check if FastAPI is running
+def wait_for_fastapi():
+    url = "http://127.0.0.1:8000/"
+    for _ in range(15):  # Wait up to 15 seconds
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                return True
+        except requests.ConnectionError:
+            time.sleep(1)  # Wait 1 second before retrying
+    return False
+
+# Wait until FastAPI is fully up
+if not wait_for_fastapi():
+    st.error("FastAPI server is not responding. Please check if it's running.")
 
 # FastAPI server URL
 API_URL = "http://127.0.0.1:8000/predict"
@@ -42,12 +71,16 @@ if st.button("Predict"):
         # Check if there is a drawing (not just a blank canvas)
         if np.any(image_data != 255):  
             base64_image = image_to_base64(image_data)
-            response = requests.post(API_URL, json={"image": base64_image})
-
-            if response.status_code == 200:
-                st.session_state["predicted_digit"] = response.json().get("digit")
-            else:
-                st.session_state["predicted_digit"] = "Error in prediction!"
+            try:
+                response = requests.post(API_URL, json={"image": base64_image})
+                if response.status_code == 200:
+                    st.session_state["predicted_digit"] = response.json().get("digit")
+                else:
+                    st.session_state["predicted_digit"] = "Error in prediction!"
+            except requests.ConnectionError:
+                st.error("Could not connect to FastAPI server.")
+        else:
+            st.warning("Please draw something before predicting!")
 
 # Display the prediction only if "Predict" was clicked
 if st.session_state["predicted_digit"] is not None:
