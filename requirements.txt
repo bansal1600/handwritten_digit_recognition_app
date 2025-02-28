@@ -10,10 +10,7 @@ numpy
 matplotlib
 pandas
 scipy
-<<<<<<< HEAD
 time
 os
-=======
 fastapi
 uvicorn
->>>>>>> 5db5c2707f0fef53799f5e0aecb5ad493f010e7a
