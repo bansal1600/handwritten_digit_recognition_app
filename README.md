@@ -7,4 +7,7 @@ If your directory structure differs, adjust the paths accordingly to prevent loa
 
 
 ## Project Overview  
-This project uses a trained CNN model on the MNIST dataset to recognize handwritten digits. The frontend provides an interactive canvas for drawing digits, while the backend processes the image and returns a prediction.  
+This project uses a trained CNN model on the MNIST dataset to recognize handwritten digits. The frontend provides an interactive canvas for drawing digits, while the backend processes the image and returns a prediction.
+
+## Find the Live App here 
+### https://digitrecog.streamlit.app/
