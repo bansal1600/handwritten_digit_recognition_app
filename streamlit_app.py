@@ -11,7 +11,7 @@ import time
 # Function to start FastAPI server
 def run_fastapi():
     process = subprocess.Popen(
-        ["uvicorn", "streamlit_api:app", "--host", "0.0.0.0", "--port", "8000"],
+        ["uvicorn", "streamlit_api:app", "--host", "127.0.0.1", "--port", "8000"],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
     )
     return process
@@ -31,9 +31,6 @@ def wait_for_fastapi():
             time.sleep(1)  # Wait 1 second before retrying
     return False
 
-# Wait until FastAPI is fully up
-if not wait_for_fastapi():
-    st.error("FastAPI server is not responding. Please check if it's running.")
 
 # FastAPI server URL
 API_URL = "http://127.0.0.1:8000/predict"
