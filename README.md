@@ -11,3 +11,6 @@ This project uses a trained CNN model on the MNIST dataset to recognize handwrit
 
 ## Find the Live App here 
 ### https://digitrecog.streamlit.app/
+
+![image](https://github.com/user-attachments/assets/04da966b-8a21-402c-9f52-cb07beb0ebac)
+
